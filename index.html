@@ -1,0 +1,83 @@
+<!-- IMAD TAGHZOUT GLSID 2 - Projet Développement Multimédia -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title> Projet Développement Multimédia </title>
+    <style>
+        canvas, video {
+            border: 1px dashed green;
+        }
+    </style>
+</head>
+<body>
+	
+	<div id="result_img"></div> <br>
+	<button onclick="show()">Photo</button><br><br>
+	<div id="content"></div> 
+	
+    <script>
+		var jpegUrl;
+		function show(){
+			document.getElementById("content").innerHTML = "<video id=\"v1\" controls width=\"400\" height=\"230\"><source src=\"Big_Buck_Bunny_Trailer.mp4\" crossorigin=\"anonymous\"></video><br><br><button onclick=\"capturer()\">Capturer</button><button onclick=\"enregistrer()\">Enregistrer</button><br><br><canvas id=\"c1\"></canvas><br>";		
+			vlib.init();
+		}
+		function capturer(){
+			vlib.copy();
+		}
+		function enregistrer(){
+			vlib.savebase64();
+		}
+		const vlib = {
+			FPS: 30,	
+			init() {
+				this.video = document.querySelector('#v1')
+				this.canvas = document.querySelector('#c1')
+				this.ctx = this.canvas.getContext('2d')
+				this.w = this.canvas.width = this.video.width
+				this.h = this.canvas.height = this.video.height
+				this.startCamera()
+			},
+			savebase64() {
+				try {
+					jpegUrl = this.canvas.toDataURL()
+					document.getElementById("result_img").innerHTML = " Jpeg Url : " + jpegUrl;
+					console.log(jpegUrl)
+				} catch (error) {
+					console.log(error)
+				}	
+			},
+			copy() {
+				try {
+					this.ctx.drawImage(this.video, 0, 0, this.w, this.h)
+					this.process()
+					if(this.video.ended || this.video.paused)
+						return
+					setTimeout(_ => this.copy(), 1000/this.FPS)
+				} catch (error) {
+						console.log(error)
+					}	
+			},
+			process(){  
+				const imageData = this.ctx.getImageData(this.w/4, this.h/4, this.w/2, this.h/2),
+				data = imageData.data
+				for(let i=0; i<data.length; i+=4) {
+					const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3]
+					data[i] = data[i+1] = data[i+2] = (r+g+b)/3
+				}
+				this.ctx.putImageData(imageData, this.w/4, this.h /4)
+			},
+			async startCamera() {
+				this.video2 = document.querySelector('#v1')
+				let stream 
+				try {
+					stream = await navigator.mediaDevices.getUserMedia({video: true})
+					this.video2.srcObject = stream
+				} catch (error) {
+					console.log(error)
+				}
+			}
+		}
+    </script>
+</body>
+</html>
