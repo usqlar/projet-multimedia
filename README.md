@@ -1,5 +1,7 @@
 # Projet Développement Multimédia
 
+![3](https://user-images.githubusercontent.com/49000243/57970007-16fb8a00-797c-11e9-9039-2e10afff5a3c.jpg)
+
 1 – Présentation :
 
 Nous nous intéressons au développement d’un module permettant de capturer la photo de l’utilisateur pour pouvoir l’ajouter à son profile. Ce module sera utilisable dans les applications Web, Mobiles hybrides et Desktop basées sur les technologies WEB.
@@ -55,4 +57,14 @@ Quand le recadrage est effectué, l’utilisateur appuie sur le bouton « enregi
 Ça sera la version 3, mais hébergée dans npmjs.org de façon à ce que tout le monde pourra l’utiliser. La même version sera déposée au terme du projet dans un dépôt Github et comportera sa description et les modes de son utilisation dans un fichier « readme.md ».
 
 # L'Application de l'Editeur de Photos
+
+![2](https://user-images.githubusercontent.com/49000243/57970029-8ec9b480-797c-11e9-995c-df64a4365665.jpg)
+
 ![3](https://user-images.githubusercontent.com/49000243/57970007-16fb8a00-797c-11e9-9039-2e10afff5a3c.jpg)
+
+![5](https://user-images.githubusercontent.com/49000243/57970037-a143ee00-797c-11e9-8382-277774bdbcbb.jpg)
+
+![6](https://user-images.githubusercontent.com/49000243/57970041-b02aa080-797c-11e9-831c-5a2c2543684c.jpg)
+
+![7](https://user-images.githubusercontent.com/49000243/57970047-b882db80-797c-11e9-8e50-55dc7663b9c2.jpg)
+
