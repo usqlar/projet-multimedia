@@ -53,3 +53,6 @@ Quand le recadrage est effectué, l’utilisateur appuie sur le bouton « enregi
 2 – 4 – Version 4
 
 Ça sera la version 3, mais hébergée dans npmjs.org de façon à ce que tout le monde pourra l’utiliser. La même version sera déposée au terme du projet dans un dépôt Github et comportera sa description et les modes de son utilisation dans un fichier « readme.md ».
+
+# L'Application de l'Editeur de Photos
+![3](https://user-images.githubusercontent.com/49000243/57970007-16fb8a00-797c-11e9-9039-2e10afff5a3c.jpg)
