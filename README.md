@@ -78,5 +78,5 @@ Quand le recadrage est effectué, l’utilisateur appuie sur le bouton « enregi
 
 ![4](https://user-images.githubusercontent.com/49000243/57970072-1283a100-797d-11e9-95ee-1c7eeb996e97.jpg)
 
-# Test de module 'taghzouteditor'
+# Teste de module 'taghzouteditor'
 ![5](https://user-images.githubusercontent.com/49000243/57970074-19121880-797d-11e9-9f22-65b0aeddd915.jpg)
