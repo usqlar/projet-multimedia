@@ -68,3 +68,14 @@ Quand le recadrage est effectué, l’utilisateur appuie sur le bouton « enregi
 
 ![7](https://user-images.githubusercontent.com/49000243/57970047-b882db80-797c-11e9-8e50-55dc7663b9c2.jpg)
 
+# Creation de module avec NPM
+
+![1](https://user-images.githubusercontent.com/49000243/57970052-da7c5e00-797c-11e9-864d-a82a0650ff37.jpg)
+
+![2](https://user-images.githubusercontent.com/49000243/57970065-00a1fe00-797d-11e9-93f2-f78a2e0a8c83.jpg)
+
+![3](https://user-images.githubusercontent.com/49000243/57970067-0e578380-797d-11e9-9541-78779b444010.jpg)
+
+![4](https://user-images.githubusercontent.com/49000243/57970072-1283a100-797d-11e9-95ee-1c7eeb996e97.jpg)
+
+![5](https://user-images.githubusercontent.com/49000243/57970074-19121880-797d-11e9-9f22-65b0aeddd915.jpg)
