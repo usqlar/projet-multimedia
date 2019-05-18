@@ -1,0 +1,144 @@
+#content_editor, #resizable{
+    display: none;
+}
+.show_editor{
+    width: 880px;
+    margin: 0 auto;
+    background: white;
+    text-align: center;
+    border: 1px solid cornflowerblue;
+    padding: 10px;
+}
+.show_editor h1{
+    text-align: center;
+    font-size: 19px;
+    color: cornflowerblue;
+    font-style: normal;
+}
+h3{
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    color: blueviolet;
+}
+#content_editor{
+    width: 860px;
+    padding: 20px;
+    margin: 0 auto;
+    border: 1px solid cornflowerblue;
+    border-top: none;
+    background: #f7f7f7;
+}
+.t_1{
+    width: 860px;
+    border-spacing: 0px; 
+    border-collapse: collapse;
+    border: 3px solid #f7f7f7;
+}
+.t_1 td{
+    background: #f7f7f7;
+}
+.t_1 .elem{
+    width: 430px; 
+    height: 220px;
+    border: 0px solid cornflowerblue;
+}
+.t_2{
+    width: 860px;
+    border-spacing: 0px; 
+    border-collapse: collapse;
+}
+#canvas{
+    background: cornflowerblue;
+    width: 400px; 
+    height: 220px;
+    color: black;
+}
+#video{
+    background:none;
+    width: 400px; 
+    height: 220px;
+}
+button{
+    display: block;
+    background-color: cornflowerblue;
+    border: none;
+    color: white;
+    padding: 15px 37px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.resizable {
+    background: none;
+    width: 110px;
+    height: 70px;
+    position: absolute;
+    top: 250px;
+    left: 350px;
+    z-index: 1000;
+}
+.resizable .resizers{
+    width: 100%;
+    height: 100%;
+    border: 2px solid blueviolet;
+    box-sizing: border-box;
+}
+.resizable .resizers .resizer{
+    width: 5px;
+    height: 5px;
+    background: white;
+    border: 2px solid black;
+    position: absolute;
+}
+.resizable .resizers .resizer.top-left {
+    left: -5px;
+    top: -5px;
+    cursor: nwse-resize; 
+}
+.resizable .resizers .resizer.top-right {
+    right: -5px;
+    top: -5px;
+    cursor: nesw-resize;
+}
+.resizable .resizers .resizer.bottom-left {
+    left: -5px;
+    bottom: -5px;
+    cursor: nesw-resize;
+}
+.resizable .resizers .resizer.bottom-right {
+    right: -5px;
+    bottom: -5px;
+    cursor: nwse-resize;
+}
+
+
+.span_val{
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+    color: #333333;
+}
+
+input[type=range] {
+    -webkit-appearance: none; 
+    width: 90%; 
+    background: darkgray;
+}
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+}
+input[type=range]:focus {
+    outline: none; 
+}
+input[type=range]::-ms-track {
+    width: 90%;
+    cursor: pointer;
+    background: transparent; 
+    border-color: transparent;
+    color: transparent;
+} 

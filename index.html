@@ -1,83 +1,160 @@
-<!-- IMAD TAGHZOUT GLSID 2 - Projet Développement Multimédia -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title> Projet Développement Multimédia </title>
-    <style>
-        canvas, video {
-            border: 1px dashed green;
-        }
-    </style>
+	<title> Projet Developpement Multimedia - Editeur de photos </title>
+	<script src="script.js"></script>
+	<link rel="stylesheet" href="css/design.css">
 </head>
 <body>
-	
-	<div id="result_img"></div> <br>
-	<button onclick="show()">Photo</button><br><br>
-	<div id="content"></div> 
-	
-    <script>
-		var jpegUrl;
-		function show(){
-			document.getElementById("content").innerHTML = "<video id=\"v1\" controls width=\"400\" height=\"230\"><source src=\"Big_Buck_Bunny_Trailer.mp4\" crossorigin=\"anonymous\"></video><br><br><button onclick=\"capturer()\">Capturer</button><button onclick=\"enregistrer()\">Enregistrer</button><br><br><canvas id=\"c1\"></canvas><br>";		
-			vlib.init();
-		}
-		function capturer(){
-			vlib.copy();
-		}
-		function enregistrer(){
-			vlib.savebase64();
-		}
-		const vlib = {
-			FPS: 30,	
-			init() {
-				this.video = document.querySelector('#v1')
-				this.canvas = document.querySelector('#c1')
-				this.ctx = this.canvas.getContext('2d')
-				this.w = this.canvas.width = this.video.width
-				this.h = this.canvas.height = this.video.height
-				this.startCamera()
-			},
-			savebase64() {
-				try {
-					jpegUrl = this.canvas.toDataURL()
-					document.getElementById("result_img").innerHTML = " Jpeg Url : " + jpegUrl;
-					console.log(jpegUrl)
-				} catch (error) {
-					console.log(error)
-				}	
-			},
-			copy() {
-				try {
-					this.ctx.drawImage(this.video, 0, 0, this.w, this.h)
-					this.process()
-					if(this.video.ended || this.video.paused)
-						return
-					setTimeout(_ => this.copy(), 1000/this.FPS)
-				} catch (error) {
-						console.log(error)
-					}	
-			},
-			process(){  
-				const imageData = this.ctx.getImageData(this.w/4, this.h/4, this.w/2, this.h/2),
-				data = imageData.data
-				for(let i=0; i<data.length; i+=4) {
-					const r = data[i], g = data[i+1], b = data[i+2], a = data[i+3]
-					data[i] = data[i+1] = data[i+2] = (r+g+b)/3
+
+		<!-- cadre de cropped -->
+		<div class='resizable' id="resizable">
+			<div class='resizers'>
+				<div class='resizer top-left'></div>
+				<div class='resizer top-right'></div>
+				<div class='resizer bottom-left'></div>
+				<div class='resizer bottom-right'></div>
+			</div>
+		</div>
+		
+		<div class="show_editor">
+			<h1> Projet Developpement Multimedia - Imad TAGHZOUT | GLSID 2</h1>
+			<button onclick="showeditor()">Editeur de Photos</button>
+		</div>
+
+		<!--  Editor Photo -->
+		<div id="content_editor">
+			<table class="t_1">
+				<tr>
+					<td class="elem" valign="top"> <canvas id="canvas"></canvas> </td>
+					<td class="elem" valign="top">
+						<video id="video" controls width="430" height="220">
+							<source src="bunny.mp4" crossorigin="anonymous">
+						</video>		
+					</td>
+				</tr>
+				<tr>
+					<td valign="top" colspan="2">
+						<table class="t_2">
+							<tr>
+								<td valign="top">
+									<h3>Contraste</h3>
+									<input type="range" onchange="filters()" min="0" max="255" step="1" value="100" id="v_c">
+									<br><span id="contraste_v" class="span_val">100%</span>
+								</td>
+								<td valign="top">
+									<h3>Luminosite</h3>
+									<input type="range" onchange="filters()" min="0" max="100" step="1" value="100" id="v_b">
+									<br><span id="luminosite_v" class="span_val">100%</span>
+								</td>
+								<td valign="top">
+									<h3>Teinte</h3>
+									<input type="range" onchange="filters()" min="0" max="100" step="1" value="0" id="v_g">
+									<br><span id="teinte_v" class="span_val">0%</span>
+								</td>
+								<td valign="top">
+									<h3>Blur</h3>
+									<input type="range" onchange="filters()" min="0" max="100" step="1" value="0" id="v_bl">
+									<br><span id="blur_v" class="span_val">0px</span>
+								</td>
+								<td valign="top">
+									<h3>Saturate</h3>
+									<input type="range" onchange="filters()" min="0" max="255" step="1" value="100" id="v_sa">
+									<br><span id="saturate_v" class="span_val">0px</span>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" valign="center" align="center">
+									<br>
+									<button onclick="capture()" id="btncapture">Capturer l'image</button>
+									<button onclick="cropimage()">Cropper l'image</button>
+									<a id="download" download="image.png">
+										<button type="button" onClick="download()">Télécharger</button>
+									</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+	<script>
+		function makeResizableDiv(div) {
+			const element = document.querySelector(div);
+			const resizers = document.querySelectorAll(div + ' .resizer')
+			const minimum_size = 20;
+			let original_width = 0;
+			let original_height = 0;
+			let original_x = 0;
+			let original_y = 0;
+			let original_mouse_x = 0;
+			let original_mouse_y = 0;
+			for (let i = 0;i < resizers.length; i++) {
+				const currentResizer = resizers[i];
+				currentResizer.addEventListener('mousedown', function(e) {
+					e.preventDefault()
+					original_width = parseFloat(getComputedStyle(element, null).getPropertyValue('width').replace('px', ''));
+					original_height = parseFloat(getComputedStyle(element, null).getPropertyValue('height').replace('px', ''));
+					original_x = element.getBoundingClientRect().left;
+					original_y = element.getBoundingClientRect().top;
+					original_mouse_x = e.pageX;
+					original_mouse_y = e.pageY;
+					window.addEventListener('mousemove', resize)
+					window.addEventListener('mouseup', stopResize)
+				})
+				function resize(e) {
+					if (currentResizer.classList.contains('bottom-right')) {
+						const width = original_width + (e.pageX - original_mouse_x);
+						const height = original_height + (e.pageY - original_mouse_y)
+						if (width > minimum_size) {
+							element.style.width = width + 'px'
+						}
+						if (height > minimum_size) {
+							element.style.height = height + 'px'
+						}
+					}
+					else if (currentResizer.classList.contains('bottom-left')) {
+						const height = original_height + (e.pageY - original_mouse_y)
+						const width = original_width - (e.pageX - original_mouse_x)
+						if (height > minimum_size) {
+							element.style.height = height + 'px'
+						}
+						if (width > minimum_size) {
+							element.style.width = width + 'px'
+							element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+						}
+					}
+					else if (currentResizer.classList.contains('top-right')) {
+						const width = original_width + (e.pageX - original_mouse_x)
+						const height = original_height - (e.pageY - original_mouse_y)
+						if (width > minimum_size) {
+							element.style.width = width + 'px'
+						}
+						if (height > minimum_size) {
+							element.style.height = height + 'px'
+							element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+						}
+					}
+					else {
+						const width = original_width - (e.pageX - original_mouse_x)
+						const height = original_height - (e.pageY - original_mouse_y)
+						if (width > minimum_size) {
+							element.style.width = width + 'px'
+							element.style.left = original_x + (e.pageX - original_mouse_x) + 'px'
+						}
+						if (height > minimum_size) {
+							element.style.height = height + 'px'
+							element.style.top = original_y + (e.pageY - original_mouse_y) + 'px'
+						}
+					}
 				}
-				this.ctx.putImageData(imageData, this.w/4, this.h /4)
-			},
-			async startCamera() {
-				this.video2 = document.querySelector('#v1')
-				let stream 
-				try {
-					stream = await navigator.mediaDevices.getUserMedia({video: true})
-					this.video2.srcObject = stream
-				} catch (error) {
-					console.log(error)
-				}
+				function stopResize() { window.removeEventListener('mousemove', resize) }
 			}
 		}
-    </script>
+		makeResizableDiv('.resizable');
+	</script>
+	
 </body>
 </html>
